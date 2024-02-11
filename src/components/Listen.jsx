@@ -3,11 +3,15 @@ import Peer from "simple-peer";
 import io from "socket.io-client";
 
 import { readAdminRequest } from "../apiRequests/adminRequests";
+import { IoIosPlayCircle } from "react-icons/io";
+import { Container } from "react-bootstrap";
 
 const socket = io.connect('http://localhost:5000');
 
 const Listen = () => {
     const [me, setMe] = useState("");
+    const [isConnected, setIsConnected] = useState(false);
+    const [connecting, setConnecting] = useState(false);
     // const [idToCall, setIdToCall] = useState("");
     const userAudio = useRef();
 
@@ -41,6 +45,8 @@ const Listen = () => {
         });
 
         socket.on("callAccepted", (signal) => {
+            setIsConnected(true);
+            setConnecting(false);
             peer.signal(signal);
         });
     }
@@ -53,20 +59,26 @@ const Listen = () => {
 
     return (
         <>
-            <h1>HINGOLI FM</h1>
+            <Container className="shadow text-center mt-3" style={{ width: "21rem" }}>
+                <h1>HINGOLI FM</h1>
 
-            <audio playsInline ref={userAudio} autoPlay controls /> <br />
+                {
+                    isConnected &&
+                    <audio ref={userAudio} autoPlay controls />
+                }
 
-            {/* <input type="text"
-                value={idToCall}
-                onChange={(e) => setIdToCall(e.target.value)}
-            /> */}
+                {
+                    connecting &&
+                    <img src="/connecting.gif" alt="Connecting..." width="100" height="20" />
+                }
 
-            <button onClick={() => handlePlay()}>
-                Play
-            </button> <br />
-
-            {/* <button onClick={handleGetId}>Get ID</button> */}
+                {
+                    !isConnected && !connecting &&
+                    <IoIosPlayCircle className="icon-hover" style={{ fontSize: "2.5rem", color: "green" }}
+                        onClick={() => { handlePlay(); setConnecting(true); }}>
+                    </IoIosPlayCircle>
+                }
+            </Container>
         </>
     )
 }
