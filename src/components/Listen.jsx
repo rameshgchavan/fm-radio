@@ -59,22 +59,27 @@ const Listen = () => {
 
     return (
         <>
-            <Container className="shadow text-center mt-3" style={{ width: "21rem" }}>
-                <h1>HINGOLI FM</h1>
-
+            <Container className="d-flex justify-content-center align-items-end shadow rounded-3 text-center my-2"
+                style={{
+                    backgroundSize: "cover",
+                    backgroundImage: "url(/hingolifm.jpg)",
+                    height: "95vh",
+                    width: "22.5rem"
+                }}
+            >
                 {
                     isConnected &&
-                    <audio ref={userAudio} autoPlay controls />
+                    <audio className="mb-4" ref={userAudio} autoPlay controls />
                 }
 
                 {
                     connecting &&
-                    <img src="/connecting.gif" alt="Connecting..." width="100" height="20" />
+                    <img className="mb-5" src="/connecting.gif" alt="Connecting..." width="100" height="20" />
                 }
 
                 {
                     !isConnected && !connecting &&
-                    <IoIosPlayCircle className="icon-hover" style={{ fontSize: "2.5rem", color: "green" }}
+                    <IoIosPlayCircle className="icon-hover mb-4" style={{ fontSize: "5rem", color: "yellow" }}
                         onClick={() => { handlePlay(); setConnecting(true); }}>
                     </IoIosPlayCircle>
                 }
