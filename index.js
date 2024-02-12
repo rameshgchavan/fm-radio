@@ -2,6 +2,8 @@
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
+const dotEnv = require("dotenv");
+
 
 // // Create object of express
 const app = express();
@@ -33,9 +35,13 @@ app.use(express.static('./client/build')); //Note: Copy build folder of frontend
 
 // If request route miss matching then send index.html file in build directory
 app.get('/*', (req, res) => {
-    // root: __dirname is used to get rid off error 
-    // 'path must be absolute or specify root to res.sendFile'
-    res.sendFile('./client/build/index.html', { root: __dirname });
+	// root: __dirname is used to get rid off error 
+	// 'path must be absolute or specify root to res.sendFile'
+	res.sendFile('./client/build/index.html', { root: __dirname });
 });
 
-server.listen(5000, () => console.log("server is running on port 5000"))
+// Environment setting
+dotEnv.config();
+const PORT = process.env.PORT;
+
+server.listen(PORT || 8080, () => console.log("server is running on port 5000"))
