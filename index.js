@@ -11,6 +11,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: true });
 
+console.log("io ", io)
+
 io.on("connection", (socket) => {
 	socket.emit("me", socket.id)
 	console.log("connection estalished by id ", socket.id)
