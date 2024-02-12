@@ -44,4 +44,4 @@ app.get('/*', (req, res) => {
 dotEnv.config();
 const PORT = process.env.PORT;
 
-server.listen(PORT || 8080, () => console.log("server is running on port 5000"))
+server.listen(PORT || 8080, () => console.log(`server is running on port ${PORT}`))
