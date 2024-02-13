@@ -3,21 +3,22 @@ import Peer from "simple-peer";
 import io from "socket.io-client";
 
 import { updateAdminRequest } from "../apiRequests/adminRequests";
-import { Container } from "react-bootstrap";
 
-const socket = io.connect('http://localhost:5000');
+const socket = io.connect("/"); //Taking proxy path from package.json 
 
 const Broadcast = () => {
     const [receivingCall, setReceivingCall] = useState(false);
     const [caller, setCaller] = useState("");
     const [callerSignal, setCallerSignal] = useState();
     const [broadcastStream, setBroadcastStream] = useState(false);
+    const [logEvent, setLogEvent] = useState(["App lounched"]);
 
     useEffect(() => {
         navigator.mediaDevices.getUserMedia({ video: false, audio: true })
             .then(stream => setBroadcastStream(stream));
 
         socket.on("me", (id) => {
+            setLogEvent([...logEvent, `${id} socket generated`]);
             handleSetId(id);
         });
 
@@ -30,7 +31,10 @@ const Broadcast = () => {
 
     const handleSetId = async (broadcastId) => {
         const res = await updateAdminRequest("email@gmail.com", { broadcastId });
-        console.warn("Id", res);
+
+        res === "Updated" ?
+            setLogEvent((log) => [...log, "Broadcasting..."])
+            : setLogEvent((log) => [...log, "Failled..."]);
     }
 
     useEffect(() => {
@@ -54,7 +58,7 @@ const Broadcast = () => {
 
     return (
         <div
-            className="d-flex shadow rounded-3 text-center"
+            className="d-flex flex-column rounded-3 text-center"
             style={{
                 backgroundImage: "url(/hingolifm-broadcast.jpg)",
                 backgroundRepeat: "no-repeat",
@@ -63,7 +67,10 @@ const Broadcast = () => {
                 height: "33rem"
             }}
         >
-            <h4 className="mt-3 ms-3" style={{ color: "yellow" }}>Broadcasting... </h4>
+            {<ul style={{ color: "yellow", fontSize: "10px" }} className=" text-start">
+                {logEvent?.map((log, index) => <li key={index}>{log}</li>)}
+            </ul>
+            }
 
             {/* <CopyToClipboard text={me} style={{ marginBottom: "2rem" }}>
                 <button variant="contained" color="primary" >
@@ -78,7 +85,7 @@ const Broadcast = () => {
             } */}
 
             {/* <button onClick={handleSetId}>Relay</button> */}
-        </div>
+        </div >
     )
 }
 

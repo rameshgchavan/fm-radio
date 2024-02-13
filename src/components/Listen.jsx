@@ -6,7 +6,7 @@ import { readAdminRequest } from "../apiRequests/adminRequests";
 import { IoIosPlayCircle } from "react-icons/io";
 import { Container } from "react-bootstrap";
 
-const socket = io.connect('http://localhost:5000');
+const socket = io.connect("/"); //Taking proxy path from package.json 
 
 const Listen = () => {
     const [me, setMe] = useState("");
@@ -59,7 +59,7 @@ const Listen = () => {
 
     return (
         <>
-            <Container className="d-flex justify-content-center align-items-end shadow rounded-3 text-center my-2"
+            <Container className="d-flex justify-content-center align-items-end shadow rounded-3 text-center"
                 style={{
                     backgroundSize: "cover",
                     backgroundImage: "url(/hingolifm.jpg)",
@@ -67,22 +67,24 @@ const Listen = () => {
                     width: "22.5rem"
                 }}
             >
-                {
-                    isConnected &&
-                    <audio className="mb-4" ref={userAudio} autoPlay controls />
-                }
+                <div className="mb-5 pb-4">
+                    {
+                        isConnected &&
+                        <audio ref={userAudio} autoPlay controls />
+                    }
 
-                {
-                    connecting &&
-                    <img className="mb-5" src="/connecting.gif" alt="Connecting..." width="100" height="20" />
-                }
+                    {
+                        connecting &&
+                        <img src="/connecting.gif" alt="Connecting..." width="100" height="20" />
+                    }
 
-                {
-                    !isConnected && !connecting &&
-                    <IoIosPlayCircle className="icon-hover mb-4" style={{ fontSize: "5rem", color: "yellow" }}
-                        onClick={() => { handlePlay(); setConnecting(true); }}>
-                    </IoIosPlayCircle>
-                }
+                    {
+                        !isConnected && !connecting &&
+                        <IoIosPlayCircle className="icon-hover" style={{ fontSize: "5rem", color: "yellow" }}
+                            onClick={() => { handlePlay(); setConnecting(true); }}>
+                        </IoIosPlayCircle>
+                    }
+                </div>
             </Container>
         </>
     )
