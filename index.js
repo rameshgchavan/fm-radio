@@ -12,9 +12,9 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: true });
 
 io.on("connection", (socket) => {
-	console.log("connection estalished by id ", socket.id)
+	console.log(`${socket.id} socket connected`);
+
 	socket.emit("me", socket.id)
-	
 
 	socket.on("callUser", (data) => {
 		io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from })

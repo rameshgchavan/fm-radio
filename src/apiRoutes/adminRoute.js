@@ -23,7 +23,6 @@ adminRoutes.route("/id").get(async (req, res) => {
 adminRoutes.route("/update").post(async (req, res) => {
     const broadcastData = req.body.broadcastData;
     const email = req.body.email;
-    console.log("updateAdminRequest received:", broadcastData);
 
     const AdminModel = adminModel();
 
