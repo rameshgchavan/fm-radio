@@ -12,9 +12,9 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: true });
 
 io.on("connection", (socket) => {
-	console.log(`${socket.id} socket connected`);
+	// console.log(`${socket.id} socket connected`);
 
-	socket.emit("me", socket.id)
+	// socket.emit("me", socket.id)
 
 	socket.on("callUser", (data) => {
 		io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from })
@@ -27,10 +27,10 @@ io.on("connection", (socket) => {
 
 
 // Import Routes
-const adminRoutes = require("./src/apiRoutes/adminRoute");
+const userRoutes = require("./src/apiRoutes/userRoutes");
 
 app.use(express.json({ limit: '200mb' }));
-app.use("/admin", adminRoutes);
+app.use("/users", userRoutes);
 
 // Run frontend
 app.use(express.static('./client/build')); //Note: Copy build folder of frontend and paste it into backend
