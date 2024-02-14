@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import Peer from "simple-peer";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
-import { updateAdminRequest } from "../apiRequests/adminRequests";
+import { updateUserRequest } from "../apiRequests/usersAPIs/updateUserAPIs";
+import { useSelector } from "react-redux";
+import { Container } from "react-bootstrap";
 
-const socket = io.connect("/"); //Taking proxy path from package.json 
+// const socket = io.connect("/"); //Taking proxy path from package.json 
 
 const Broadcast = () => {
     const [receivingCall, setReceivingCall] = useState(false);
@@ -13,26 +15,27 @@ const Broadcast = () => {
     const [broadcastStream, setBroadcastStream] = useState(false);
     const [logEvent, setLogEvent] = useState(["App lounched"]);
 
+    const { scrutinizedUser } = useSelector(state => state.usersReducer);
+    const { socket } = useSelector(state => state.socketReducer);
+
     useEffect(() => {
         navigator.mediaDevices.getUserMedia({ video: false, audio: true })
             .then(stream => setBroadcastStream(stream));
 
-        socket.on("me", (id) => {
-            setLogEvent([...logEvent, `${id} socket generated`]);
-            handleSetId(id);
-        });
+        setLogEvent([...logEvent, `${socket.id} id generated`]);
+        handleSetId(socket.id);
 
         socket.on("callUser", (data) => {
             setReceivingCall(true);
             setCaller(data.from);
             setCallerSignal(data.signal);
         });
-    }, [])
+    }, [socket])
 
     const handleSetId = async (broadcastId) => {
-        const res = await updateAdminRequest("email@gmail.com", { broadcastId });
+        const res = await updateUserRequest(scrutinizedUser, { email: scrutinizedUser.email }, { broadcastId });
 
-        res === "Updated" ?
+        res.code === 202 ?
             setLogEvent((log) => [...log, "Broadcasting..."])
             : setLogEvent((log) => [...log, "Failled..."]);
     }
@@ -57,13 +60,13 @@ const Broadcast = () => {
     }
 
     return (
-        <div
+        <Container
             className="d-flex flex-column rounded-3 text-center"
             style={{
                 backgroundImage: "url(/hingolifm-broadcast.jpg)",
                 backgroundRepeat: "no-repeat",
-                backgroundSize: "77.5rem",
-                width: "77.5rem",
+                // backgroundSize: "77.5rem",
+                // width: "77.5rem",
                 height: "33rem"
             }}
         >
@@ -85,7 +88,7 @@ const Broadcast = () => {
             } */}
 
             {/* <button onClick={handleSetId}>Relay</button> */}
-        </div >
+        </Container >
     )
 }
 

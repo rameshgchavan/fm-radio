@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Peer from "simple-peer";
-import io from "socket.io-client";
 
-import { readAdminRequest } from "../apiRequests/adminRequests";
+import { readBroadcastIdRequest } from "../apiRequests/usersAPIs/readUsersAPIs";
 import { IoIosPlayCircle } from "react-icons/io";
 import { Container } from "react-bootstrap";
 
+import io from "socket.io-client";
 const socket = io.connect("/"); //Taking proxy path from package.json 
 
 const Listen = () => {
@@ -15,16 +15,14 @@ const Listen = () => {
     // const [idToCall, setIdToCall] = useState("");
     const userAudio = useRef();
 
-    useEffect(() => {
-        socket.on("me", (id) => {
-            setMe(id);
-        });
-    }, []);
+    socket.on("connect", () => {
+        setMe(socket.id);
+    });
 
     const handlePlay = async () => {
         const stream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
 
-        const { broadcastId } = await readAdminRequest("email@gmail.com");
+        const { broadcastId } = await readBroadcastIdRequest("vijaysinghthakurhnl@gmail.com");
 
         const peer = new Peer({
             initiator: true,
@@ -50,12 +48,6 @@ const Listen = () => {
             peer.signal(signal);
         });
     }
-
-    // const handleGetId = async () => {
-    //     const data = await readAdminRequest("email@gmail.com");
-
-    //     setBroadcastId(data.broadcastId);
-    // }
 
     return (
         <>
