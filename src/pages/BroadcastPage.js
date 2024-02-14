@@ -1,6 +1,6 @@
 import Broadcast from '../components/Broadcast'
 
-const Admin = () => {
+const BroadcastPage = () => {
     return (
         <div>
             <Broadcast />
@@ -8,4 +8,4 @@ const Admin = () => {
     )
 }
 
-export default Admin
+export default BroadcastPage

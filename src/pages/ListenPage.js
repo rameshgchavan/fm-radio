@@ -1,6 +1,6 @@
 import Listen from '../components/Listen'
 
-const Home = () => {
+const ListenPage = () => {
     return (
         <div>
             <Listen />
@@ -8,4 +8,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default ListenPage
