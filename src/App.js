@@ -1,16 +1,19 @@
+import { useSelector } from "react-redux";
 import "./App.css"
-import { Routes, Route } from "react-router-dom"
-import Home from "./pages/Home"
-import Admin from "./pages/Admin"
+import pageRoutes from "./routes/pageRoutes"
 
 function App() {
+  // const scrutinizedUser = {
+  //   token: "token"
+  // };
+
+  const { scrutinizedUser } = useSelector(state => state.usersReducer);
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/admin" element={<Admin />} />
-    </Routes>
+    <div className="mt-3">
+      {pageRoutes(scrutinizedUser)}
+    </div>
   )
 }
 
-export default App
+export default App;
