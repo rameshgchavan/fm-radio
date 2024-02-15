@@ -80,7 +80,7 @@ userRoutes.route("/login").post(async (req, res) => {
 
     if (scrutiny.code == 200) {
         // Find autheticated user 
-        const user = await UsersModel.findOne(req.body).select('-Password');
+        const user = await UsersModel.findOne(req.body).select('-password');
         // Create token to secure routes and send it into response
         jwt.sign({}, JWTKEY, (err, token) => {
             if (err) { res.send(err) }
