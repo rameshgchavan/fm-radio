@@ -6,23 +6,18 @@ import { IoIosPlayCircle } from "react-icons/io";
 import { Container } from "react-bootstrap";
 
 import io from "socket.io-client";
-const socket = io.connect("/"); //Taking proxy path from package.json 
 
 const Listen = () => {
-    const [me, setMe] = useState("");
     const [isConnected, setIsConnected] = useState(false);
     const [connecting, setConnecting] = useState(false);
-    // const [idToCall, setIdToCall] = useState("");
     const userAudio = useRef();
-
-    socket.on("connect", () => {
-        setMe(socket.id);
-    });
 
     const handlePlay = async () => {
         const stream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
 
         const { broadcastId } = await readBroadcastIdRequest("vijaysinghthakurhnl@gmail.com");
+
+        const socket = io.connect("/"); //Taking proxy path from package.json 
 
         const peer = new Peer({
             initiator: true,
@@ -34,7 +29,7 @@ const Listen = () => {
             socket.emit("callUser", {
                 userToCall: broadcastId,
                 signalData: data,
-                from: me
+                from: socket.id
             })
         });
 
