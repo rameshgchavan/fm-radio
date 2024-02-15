@@ -80,7 +80,7 @@ const ForgotPassword = () => {
     }
 
     return (
-        <Container style={{ width: "22rem" }} className='border px-4 pt-2 pb-4 shadow' >
+        <Container style={{ width: "22rem" }} className='border px-4 pt-2 pb-4 shadow mt-3' >
            {/* Close button */}
             <div className="d-flex flex-column">
                 <Button variant="danger" size='sm'

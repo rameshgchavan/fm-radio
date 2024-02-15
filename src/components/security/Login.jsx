@@ -67,7 +67,7 @@ const Login = () => {
 
     return (
         <>
-            <Container style={{ width: "22rem" }} className='border rounded p-4 shadow' >
+            <Container style={{ width: "22rem" }} className='border rounded p-4 shadow mt-3' >
                 <Form onSubmit={handleLogin} className='d-flex flex-column justify-content-center'>
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.

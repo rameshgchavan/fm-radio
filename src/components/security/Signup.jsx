@@ -93,7 +93,7 @@ const Signup = () => {
     }
 
     return (
-        <Container style={{ width: "22rem" }} className='border px-4 pt-2 pb-4 shadow' >
+        <Container style={{ width: "22rem" }} className='border px-4 pt-2 pb-4 shadow mt-3' >
             <div className="d-flex flex-column">
                 <Button variant="danger" size='sm'
                     className="flex-direction: column align-self-end rounded-5"

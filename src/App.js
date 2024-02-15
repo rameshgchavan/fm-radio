@@ -10,7 +10,7 @@ function App() {
   const { scrutinizedUser } = useSelector(state => state.usersReducer);
 
   return (
-    <div className="mt-3">
+    <div >
       {pageRoutes(scrutinizedUser)}
     </div>
   )
