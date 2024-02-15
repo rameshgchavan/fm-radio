@@ -6,8 +6,6 @@ import { updateUserRequest } from "../apiRequests/usersAPIs/updateUserAPIs";
 import { useSelector } from "react-redux";
 import { Container } from "react-bootstrap";
 
-// const socket = io.connect("/"); //Taking proxy path from package.json 
-
 const Broadcast = () => {
     const [receivingCall, setReceivingCall] = useState(false);
     const [caller, setCaller] = useState("");
