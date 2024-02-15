@@ -17,7 +17,7 @@ import LoadingModal from '../modals/LoadingModal';
 // This component used by routes/PublicRoutes
 // This component checks user credentials
 import io from "socket.io-client";
-const socket = io.connect("/");
+
 
 const Login = () => {
     const emailID = useRef(null);
@@ -32,12 +32,18 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
 
+        // update redux to show loading modal
+        dispatch(changeLoadingAction(true));
+
         const crediantials = {
             email: emailID.current,
             password: password.current.toString()
         }
 
         const user = await readUserRequest(crediantials);
+
+        // update redux to hide loading modal
+        dispatch(changeLoadingAction(false));
 
         if (user.code === 404) {
             alert(user.message);
@@ -49,26 +55,30 @@ const Login = () => {
             return
         }
 
-        // update redux to show loading modal
-        dispatch(changeLoadingAction(true));
+        if (user.token) {
+            dispatch(changeLoadingAction(true));
 
-        dispatch(updateSocketAction(socket));
+            const socket = io.connect("/"); // Taking proxy path from package.json
 
-        // update user redux
-        // dispatch(authenticateUserAction(user));
-        dispatch(addScrutinizedUserAction(user));
+            // update user redux
+            // dispatch(authenticateUserAction(user));
+            dispatch(addScrutinizedUserAction(user));
 
-        // update redux to hide loading modal
-        dispatch(changeLoadingAction(false));
+            socket.on("connect", () => {
+                dispatch(updateSocketAction(socket));
 
-        // navigate to user or customer page
-        navigate("/private/broadcast");
+                dispatch(changeLoadingAction(false));
+
+                // navigate to user or customer page
+                navigate("/private/broadcast");
+            });
+        }
     }
 
     return (
         <>
             <Container style={{ width: "22rem" }} className='border rounded p-4 shadow mt-3' >
-                <Form onSubmit={handleLogin} className='d-flex flex-column justify-content-center'>
+                <Form onSubmit={handleLogin} >
                     <Form.Text className="text-muted">
                         We'll never share your email with anyone else.
                     </Form.Text>
