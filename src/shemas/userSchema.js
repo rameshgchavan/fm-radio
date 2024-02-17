@@ -1,7 +1,7 @@
 // Import mongoose
 const mongoose = require("mongoose");
 
-// Create Schema
+// User Schema
 const userSchema = new mongoose.Schema({
     broadcastId: String,
     email: String,

@@ -5,22 +5,30 @@ const { Server } = require("socket.io");
 const dotEnv = require("dotenv");
 
 
-// // Create object of express
+// Instance of express
 const app = express();
 
+// https server
 const server = http.createServer(app);
+
+// Creating io websocket connection
 const io = new Server(server, { cors: true });
 
+// Calling and emiting events on io "connection" event
 io.on("connection", (socket) => {
 	// console.log(`${socket.id} socket connected`);
 
 	// socket.emit("me", socket.id)
 
+	// Emiting "callUser" events on socket "callUser" event
 	socket.on("callUser", (data) => {
+		// Emiting "callUser" events on io "callUser" event to broadcaster socket id
 		io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from })
 	});
 
+	// Emiting "callAccepted" events on socket "answerCall" event
 	socket.on("answerCall", (data) => {
+		// Emiting "callAccepted" events on io "callAccepted" event to listener socket id
 		io.to(data.to).emit("callAccepted", data.signal)
 	});
 })

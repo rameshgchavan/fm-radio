@@ -2,6 +2,7 @@
 const UsersModel = require("../models/usersModel")();
 
 // Fuction to verify authenticattion
+// Callers: apiRoutes/userRoutes.js
 const userScrutiny = async (reqBody) => {
     // Destruct request body
     const { email, password } = reqBody;

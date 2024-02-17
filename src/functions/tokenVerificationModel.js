@@ -6,6 +6,7 @@ dotEnv.config();
 const JWTKEY = process.env.JWTKEY;
 
 // Fuction to verify token received from client
+// Callers: apiRoutes/userRoutes.js
 const tokenVerification = async (req, res, next) => {
     // Get token received in header from client
     let token = req.headers["authorization"];
