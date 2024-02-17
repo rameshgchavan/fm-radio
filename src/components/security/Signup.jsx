@@ -8,8 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { createUserRequest } from '../../apiRequests/usersAPIs';
 
-// This component used by routes/PublicRoutes
 // This component checks user credentials and saves new user to database
+// Users: routes/publicRoutes.js
 const Signup = () => {
     const [disabled, setDidsabled] = useState(false);
     const [hidden, setHidden] = useState(true);

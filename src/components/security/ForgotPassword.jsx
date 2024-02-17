@@ -49,8 +49,9 @@ const ForgotPassword = () => {
         else { alert(isEmail) }
     };
 
-     // This function called on reset password form's submit button (Reset) cliked
+    // This function called on reset password form's submit button (Reset) cliked
     // This function varifies passwords and OTPs and updated password in database
+    // Users: routes/publicRoutes.js
     const handleReset = async (e) => {
         e.preventDefault();
 
@@ -81,7 +82,7 @@ const ForgotPassword = () => {
 
     return (
         <Container style={{ width: "22rem" }} className='border px-4 pt-2 pb-4 shadow mt-3' >
-           {/* Close button */}
+            {/* Close button */}
             <div className="d-flex flex-column">
                 <Button variant="danger" size='sm'
                     className="flex-direction: column align-self-end rounded-5"

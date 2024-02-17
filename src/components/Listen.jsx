@@ -1,30 +1,41 @@
 import { useRef, useState } from "react";
-import Peer from "simple-peer";
-
-import { readBroadcastIdRequest } from "../apiRequests/usersAPIs/readUsersAPIs";
-import { IoIosPlayCircle } from "react-icons/io";
 import { Container } from "react-bootstrap";
+import { IoIosPlayCircle } from "react-icons/io";
 
+import Peer from "simple-peer";
 import io from "socket.io-client";
 
+// api request fuction
+import { readBroadcastIdRequest } from "../apiRequests/usersAPIs/readUsersAPIs";
+
+// This component listen the voice stream using websocket
+// Users: pages/listenPage.js
 const Listen = () => {
+    // Initialized state hooks
     const [isConnected, setIsConnected] = useState(false);
     const [connecting, setConnecting] = useState(false);
     const userAudio = useRef();
 
+    // This fuction plays received voice 
+    // Callers: /play button 
     const handlePlay = async () => {
+        // Getting voice stream of device
         const stream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
 
+        // api request to get socket id from db
         const { broadcastId } = await readBroadcastIdRequest("vijaysinghthakurhnl@gmail.com");
 
+        // Creating websocket connection
         const socket = io.connect("/"); //Taking proxy path from package.json 
 
+        // Creating new peer
         const peer = new Peer({
             initiator: true,
             trickle: false,
             stream: stream
         });
 
+        // Emiting socket "callUser" event on peer "signal" event
         peer.on("signal", (data) => {
             socket.emit("callUser", {
                 userToCall: broadcastId,
@@ -33,13 +44,16 @@ const Listen = () => {
             })
         });
 
+        // Setting stream to audio player on peer "stream" event
         peer.on("stream", (stream) => {
             userAudio.current.srcObject = stream;
         });
 
+        // updating states and calling peer signal function on socket "callAccepted" event
         socket.on("callAccepted", (signal) => {
             setIsConnected(true);
             setConnecting(false);
+            // peer signal function calling with argument broadcaster's signals
             peer.signal(signal);
         });
     }

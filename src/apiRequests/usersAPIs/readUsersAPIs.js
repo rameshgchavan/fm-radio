@@ -12,6 +12,7 @@ const readUserRequest = async (crediantials) => {
     );
 };
 
+// Get socket id
 const readBroadcastIdRequest = async (email) => {
     return (
         (await axios(`/users/id`,

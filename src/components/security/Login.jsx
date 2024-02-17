@@ -1,45 +1,50 @@
+import { useRef } from 'react';
 import { Container, Button, Form, Nav } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useRef } from 'react';
+import io from "socket.io-client";
 
+// redux hooks
 import { useDispatch } from 'react-redux';
-
-import { readUserRequest } from '../../apiRequests/usersAPIs';
 
 // redux actions
 import { addScrutinizedUserAction } from '../../redux/features/usersSlice';
 import { updateSocketAction } from "../../redux/features/socketSlice";
 import { changeLoadingAction } from "../../redux/features/loadingSlice";
 
+// api request fuction
+import { readUserRequest } from '../../apiRequests/usersAPIs';
+
 // component
 import LoadingModal from '../modals/LoadingModal';
 
-// This component used by routes/PublicRoutes
 // This component checks user credentials
-import io from "socket.io-client";
-
-
+// Users: routes/publicRoutes.js
 const Login = () => {
+    // Initialized reference hooks
     const emailID = useRef(null);
     const password = useRef(null);
 
+    // Instance of navigation hook
     const navigate = useNavigate();
 
-    // Create object of useDispatch method
+    // Instance of redux dispatch hook
     const dispatch = useDispatch();
 
-    // This function called on form's submit button (Login) clicked
+    // This function handle user credentials
+    // Callers: /login button
     const handleLogin = async (e) => {
         e.preventDefault();
 
         // update redux to show loading modal
         dispatch(changeLoadingAction(true));
 
+        // Storing user's input in object
         const crediantials = {
             email: emailID.current,
             password: password.current.toString()
         }
 
+        // api request to get scrutinized user details
         const user = await readUserRequest(crediantials);
 
         // update redux to hide loading modal
@@ -55,18 +60,23 @@ const Login = () => {
             return
         }
 
+        // Successfull scrutinization
         if (user.token) {
+            // update redux to show loading modal
             dispatch(changeLoadingAction(true));
 
+            // Creating websocket connection
             const socket = io.connect("/"); // Taking proxy path from package.json
 
-            // update user redux
-            // dispatch(authenticateUserAction(user));
+            // update redux to store user details
             dispatch(addScrutinizedUserAction(user));
 
+            // Store socket and navigate to broadcast page on socket "connect" event
             socket.on("connect", () => {
+                // update redux to store socket
                 dispatch(updateSocketAction(socket));
 
+                // update redux to hide loading modal
                 dispatch(changeLoadingAction(false));
 
                 // navigate to user or customer page

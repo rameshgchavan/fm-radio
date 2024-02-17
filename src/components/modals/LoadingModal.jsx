@@ -1,7 +1,8 @@
 import { Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
-// This component used by pages/LoadingsPage, cards/LoadingCard and cards/TransactionCard
+// This modal component shows animated image if app taking time to execute
+// Users: components/security/Login.jsx
 const LoadingModal = () => {
   const { isLoading: showMe } = useSelector(state => state.loadingReducer);
 
@@ -13,7 +14,7 @@ const LoadingModal = () => {
         <Modal.Title style={{ height: "16px", fontSize: "16px" }}>Please wait</Modal.Title>
       </Modal.Header>
       <Modal.Body className="text-center">
-        <img src="/working.gif" alt="working" width="200" height="135"/>
+        <img src="/working.gif" alt="working" width="200" height="135" />
       </Modal.Body>
       {/* <Modal.Footer>
                     <Button variant="secondary" onClick={() => closeMe(false)}>

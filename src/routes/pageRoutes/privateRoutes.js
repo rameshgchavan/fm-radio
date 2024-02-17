@@ -2,8 +2,8 @@ import { Outlet, Route } from "react-router-dom";
 
 import { adminRoutes } from "./pageRoutes";
 
-// This function called by pageRoutes/index.js
 // This function returns private page routes
+// Users: pageRoutes/index.js
 const privateRoutes = () => {
     return (
         // Returning private routes according to user type

@@ -6,8 +6,8 @@ import PageNotFound from "../../pages/PageNotFound";
 import privateRoutes from './privateRoutes';
 import publicRoutes from '../publicRoutes';
 
-// This function called by src/App.js
 // This function returns pages routes
+// Users: src/App.js
 const pageRoutes = (scrutinizedUser) => {
     return (
         <Routes >
