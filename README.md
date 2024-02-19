@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+## WEB-STREAM-RADIO UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Live app link
+[fm-radio](https://hingolifm.onrender.com)
+#
 
-## Available Scripts
+### About App
+This app plays live broadcasted voice/audio stream, this app is like fm radio but it does not catch any freqency rather it get live stream by using websocket
+#
 
-In the project directory, you can run:
+### Project status
+Updating on users feedbacks.
+#
 
-### `npm start`
+### Prerequisites
+- Download and install [Node.js](https://nodejs.org/en/download)
+- Download and install [Visual Studio Code](https://code.visualstudio.com/download)
+#
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Technologies
+I used react js, bootstrap, react router dom, react icon, axios, emailjs, redux, reduxjs toolkit, and websocket.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Dependacies
 
-### `npm test`
+![image](https://github.com/rameshgchavan/fm-radio/assets/109573381/fc7daf68-aa8b-4679-8aaf-2fafe31dc123)
+#
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Step to clone repository on local machine
+- Click on Code button and copy path in HTTPS
+![image](https://github.com/rameshgchavan/web-stream-radio/assets/109573381/edd7067a-9fbb-41ba-bd1f-d3ad5f9d2eff)
 
-### `npm run build`
+1. Create/Open: web-stream-radio folder on your local machine
+2. Type: `cmd` in folder's address bar and hit Enter key on keyboard. Command prompt will open
+3. Type `git clone -b frontend `, then paste the URL you copied earlier and then type `frontend`, hit Enter key on keyboard and wait until it done.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![image](https://github.com/rameshgchavan/web-stream-radio/assets/109573381/6b16f450-ef98-4a2d-af9f-aa8b22a03f23)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#
+4. Open: frontend folder on your local machine
+5. Type: `cmd` in folder's address bar and hit Enter key on keyboard. Command prompt will open
+6. Type: `npm install` and hit Enter key on keyboard and wait for packages get installed successfully
+7. Type: `code .` and hit enter. Visual Studio Code will open
+8. Type `npm start` to run app on local server in browser or type `npm build` to make app build.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Approch
+- I developed this app for fm-radio broadcaster.
+#
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### About me: 
+- Ramesh Chavan, Full Stack Web Developer|MERN|AlmaBetter Trainee .
+    - Email: ramesh7452@gmail.com.
