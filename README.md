@@ -29,14 +29,14 @@ Dependacies
 - Click on Code button and copy path in HTTPS
 ![image](https://github.com/rameshgchavan/web-stream-radio/assets/109573381/edd7067a-9fbb-41ba-bd1f-d3ad5f9d2eff)
 
-1. Create/Open: web-stream-radio folder on your local machine
+1. Create/Open: `web-stream-radio` folder on your local machine
 2. Type: `cmd` in folder's address bar and hit Enter key on keyboard. Command prompt will open
 3. Type `git clone -b frontend `, then paste the URL you copied earlier and then type `frontend`, hit Enter key on keyboard and wait until it done.
 
 ![image](https://github.com/rameshgchavan/web-stream-radio/assets/109573381/6b16f450-ef98-4a2d-af9f-aa8b22a03f23)
 
 #
-4. Open: frontend folder on your local machine
+4. Open: `frontend` folder on your local machine
 5. Type: `cmd` in folder's address bar and hit Enter key on keyboard. Command prompt will open
 6. Type: `npm install` and hit Enter key on keyboard and wait for packages get installed successfully
 7. Type: `code .` and hit enter. Visual Studio Code will open
