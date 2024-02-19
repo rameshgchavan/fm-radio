@@ -34,13 +34,13 @@ Dependacies
 ![image](https://github.com/rameshgchavan/web-stream-radio/assets/109573381/edd7067a-9fbb-41ba-bd1f-d3ad5f9d2eff)
 
 
-1. Create/Open: web-stream-radio folder on your local machine
+1. Create/Open: `web-stream-radio` folder on your local machine
 2. Type: `cmd` in folder's address bar and hit Enter key on keyboard. Command prompt will open
 3. Type `git clone -b backend `, then paste the URL you copied earlier and then type `backend`, hit Enter key on keyboard and wait until it done.
 
 ![image](https://github.com/rameshgchavan/web-stream-radio/assets/109573381/c6b55310-6bb7-4b98-b4ff-db42d44db8a2)
 #
-4. Open: backend folder on your local machine
+4. Open: `backend` folder on your local machine
 5. Type: `cmd` in folder's address bar and hit Enter key on keyboard. Command prompt will open
 6. Type: `npm install` and hit Enter key on keyboard and wait for packages get installed successfully
 7. Type: `npm install -g nodemon` and wait for packages get installed successfully
