@@ -22,7 +22,7 @@ Updating on users feedbacks.
 #
 
 ### Technologies
-I used node js, express js, websocket and mongoose.
+I used node js, express js, websocket and mongoDb.
 
 Dependacies
 
