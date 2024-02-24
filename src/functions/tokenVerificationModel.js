@@ -19,13 +19,13 @@ const tokenVerification = async (req, res, next) => {
         jwt.verify(token, JWTKEY, (err) => {
             // If error occurred
             if (err) {
-                res.send({ code: 417, message: `Expectation failed ${err}` });
+                res.send({ code: 417, message: `Token: Expectation failed ${err}` });
             }
             // Token verified now do further
             else { next(); }
         })
     }
-    else { res.send({ code: 204, message: "No content" }) } // If not token exsist
+    else { res.send({ code: 204, message: "Token: No content" }) } // If token not exsist
 }
 
 module.exports = tokenVerification;
