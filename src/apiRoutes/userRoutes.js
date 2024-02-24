@@ -24,7 +24,7 @@ userRoutes.route("/id").get(async (req, res) => {
     const email = req.headers.email;
 
     await UsersModel.findOne({ email })
-        .select("broadcastId")
+        .select("-_id broadcastId")
         .then(broadcastData => res.send(broadcastData))
         .catch(err => res.send(err));
 });
