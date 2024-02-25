@@ -1,7 +1,7 @@
 ## WEB-STREAM-RADIO Server
 
 ### Live app link
-[fm-radio](https://hingolifm.onrender.com)
+[Web Stream Radio](https://hingolifm.onrender.com)
 #
 
 ### APIs Documentation
