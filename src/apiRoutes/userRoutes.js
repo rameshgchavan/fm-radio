@@ -19,12 +19,12 @@ const JWTKEY = process.env.JWTKEY
 const userRoutes = express.Router();
 
 // (APIs) downwards
-// Get route to send broadcastId
-userRoutes.route("/id").get(async (req, res) => {
+// Get route to send broadcast id and user logged status
+userRoutes.route("/broadcast").get(async (req, res) => {
     const email = req.headers.email;
 
     await UsersModel.findOne({ email })
-        .select("-_id broadcastId")
+        .select("-_id broadcastId isLogged")
         .then(broadcastData => res.send(broadcastData))
         .catch(err => res.send(err));
 });
