@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
     broadcastId: String,
     email: String,
-    password: String
+    password: String,
+    isLogged: Boolean
 });
 
 // Export schema
