@@ -13,9 +13,9 @@ const readUserRequest = async (crediantials) => {
 };
 
 // Get socket id
-const readBroadcastIdRequest = async (email) => {
+const readBroadcastRequest = async (email) => {
     return (
-        (await axios(`/users/id`,
+        (await axios(`/users/broadcast`,
             {
                 method: "get",
                 headers: { email }
@@ -38,6 +38,6 @@ const readUserEmailRequest = async (Email) => {
 
 export {
     readUserRequest,
-    readBroadcastIdRequest,
+    readBroadcastRequest,
     readUserEmailRequest
 }
