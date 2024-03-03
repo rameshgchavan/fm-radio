@@ -21,6 +21,19 @@ const Broadcast = () => {
     // Getting socket from store
     const { socket } = useSelector(state => state.socketReducer);
 
+    // This fuction set socket id into db
+    // Callers: /useEffect 
+    const handleSetId = async (broadcastId) => {
+        // api request to set socket id into db
+        const res = await updateUserRequest(scrutinizedUser, { email: scrutinizedUser.email }, { broadcastId, isLogged: true });
+
+        // Updating log state hook
+        res.code === 202 ?
+            setLogEvent((log) => [...log, "Broadcasting..."])
+            : setLogEvent((log) => [...log, "Failled..."]);
+    }
+
+    // This useEffect handles generate media stream and ser socket id in db
     useEffect(() => {
         // Getting voice stream of device
         navigator.mediaDevices.getUserMedia({ video: false, audio: true })
@@ -37,19 +50,26 @@ const Broadcast = () => {
             setCaller(data.from);
             setCallerSignal(data.signal);
         });
-    }, [socket])
+    }, [socket]);
 
-    // This fuction set socket id into db
-    // Callers: /useEffect 
-    const handleSetId = async (broadcastId) => {
-        // api request to set socket id into db
-        const res = await updateUserRequest(scrutinizedUser, { email: scrutinizedUser.email }, { broadcastId });
-
-        // Updating log state hook
-        res.code === 202 ?
-            setLogEvent((log) => [...log, "Broadcasting..."])
-            : setLogEvent((log) => [...log, "Failled..."]);
+    const handleTabClosing = async () => {
+        await updateUserRequest(scrutinizedUser, { email: scrutinizedUser.email }, { isLogged: false });
     }
+
+    const alertUser = (event) => {
+        event.preventDefault();
+        event.returnValue = '';
+    }
+
+    // Thid useEffect sets isLogged to flase on browser close event
+    useEffect(() => {
+        window.addEventListener('beforeunload', alertUser)
+        window.addEventListener('unload', handleTabClosing)
+        return () => {
+            window.removeEventListener('beforeunload', alertUser)
+            window.removeEventListener('unload', handleTabClosing)
+        };
+    }, []);
 
     useEffect(() => {
         // Fuction calling if receivingCall is true
