@@ -6,7 +6,7 @@ import Peer from "simple-peer";
 import io from "socket.io-client";
 
 // api request fuction
-import { readBroadcastIdRequest } from "../apiRequests/usersAPIs/readUsersAPIs";
+import { readBroadcastRequest } from "../apiRequests/usersAPIs/readUsersAPIs";
 
 // This component listen the voice stream using websocket
 // Users: pages/listenPage.js
@@ -14,6 +14,7 @@ const Listen = () => {
     // Initialized state hooks
     const [isConnected, setIsConnected] = useState(false);
     const [connecting, setConnecting] = useState(false);
+    const [status, setStatus] = useState(false);
     const userAudio = useRef();
 
     // This fuction plays received voice 
@@ -23,39 +24,42 @@ const Listen = () => {
         const stream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
 
         // api request to get socket id from db
-        const { broadcastId } = await readBroadcastIdRequest("vijaysinghthakurhnl@gmail.com");
+        const { broadcastId, isLogged } = await readBroadcastRequest("vijaysinghthakurhnl@gmail.com");
 
-        // Creating websocket connection
-        const socket = io.connect("/"); //Taking proxy path from package.json 
+        if (isLogged) {
+            setStatus(true);
+            // Creating websocket connection
+            const socket = io.connect("/"); //Taking proxy path from package.json 
 
-        // Creating new peer
-        const peer = new Peer({
-            initiator: true,
-            trickle: false,
-            stream: stream
-        });
+            // Creating new peer
+            const peer = new Peer({
+                initiator: true,
+                trickle: false,
+                stream: stream
+            });
 
-        // Emiting socket "callUser" event on peer "signal" event
-        peer.on("signal", (data) => {
-            socket.emit("callUser", {
-                userToCall: broadcastId,
-                signalData: data,
-                from: socket.id
-            })
-        });
+            // Emiting socket "callUser" event on peer "signal" event
+            peer.on("signal", (data) => {
+                socket.emit("callUser", {
+                    userToCall: broadcastId,
+                    signalData: data,
+                    from: socket.id
+                })
+            });
 
-        // Setting stream to audio player on peer "stream" event
-        peer.on("stream", (stream) => {
-            userAudio.current.srcObject = stream;
-        });
+            // Setting stream to audio player on peer "stream" event
+            peer.on("stream", (stream) => {
+                userAudio.current.srcObject = stream;
+            });
 
-        // updating states and calling peer signal function on socket "callAccepted" event
-        socket.on("callAccepted", (signal) => {
-            setIsConnected(true);
-            setConnecting(false);
-            // peer signal function calling with argument broadcaster's signals
-            peer.signal(signal);
-        });
+            // updating states and calling peer signal function on socket "callAccepted" event
+            socket.on("callAccepted", (signal) => {
+                setIsConnected(true);
+                setConnecting(false);
+                // peer signal function calling with argument broadcaster's signals
+                peer.signal(signal);
+            });
+        }
     }
 
     return (
@@ -75,8 +79,13 @@ const Listen = () => {
                     }
 
                     {
-                        connecting &&
+                        connecting && status &&
                         <img src="/connecting.gif" alt="Connecting..." width="100" height="20" />
+                    }
+
+                    {
+                        connecting && !status &&
+                        < div style={{ fontSize: "12px", color: "yellow" }}>Broadcaster is offline</div>
                     }
 
                     {
@@ -87,11 +96,10 @@ const Listen = () => {
                     }
                 </div>
 
-                <div className="mb-1" style={{ fontSize: "10px", color: "white" }}>
-                    This app is developed by Ramesh Chavan <br />
-                    Contact: 7020554505
+                <div className="mb-1" style={{ fontSize: "8.5px", color: "white" }}>
+                    This app is developed by Ramesh Chavan, contact: 7020554505
                 </div>
-            </Container>
+            </Container >
         </>
     )
 }
