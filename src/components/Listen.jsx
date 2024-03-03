@@ -14,7 +14,7 @@ const Listen = () => {
     // Initialized state hooks
     const [isConnected, setIsConnected] = useState(false);
     const [connecting, setConnecting] = useState(false);
-    const [status, setStatus] = useState(false);
+    const [status, setStatus] = useState(true);
     const userAudio = useRef();
 
     // This fuction plays received voice 
@@ -26,8 +26,9 @@ const Listen = () => {
         // api request to get socket id from db
         const { broadcastId, isLogged } = await readBroadcastRequest("vijaysinghthakurhnl@gmail.com");
 
+        setStatus(isLogged);
+
         if (isLogged) {
-            setStatus(true);
             // Creating websocket connection
             const socket = io.connect("/"); //Taking proxy path from package.json 
 
@@ -84,7 +85,7 @@ const Listen = () => {
                     }
 
                     {
-                        connecting && !status &&
+                        !status &&
                         < div style={{ fontSize: "12px", color: "yellow" }}>Broadcaster is offline</div>
                     }
 
