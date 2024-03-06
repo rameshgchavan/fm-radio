@@ -46,11 +46,13 @@ const Listen = () => {
                     signalData: data,
                     from: socket.id
                 })
+                console.warn("signal");
             });
 
             // Setting stream to audio player on peer "stream" event
             peer.on("stream", (stream) => {
                 userAudio.current.srcObject = stream;
+                console.warn("stream");
             });
 
             // updating states and calling peer signal function on socket "callAccepted" event
@@ -59,6 +61,8 @@ const Listen = () => {
                 setConnecting(false);
                 // peer signal function calling with argument broadcaster's signals
                 peer.signal(signal);
+
+                console.warn("callAccepted");
             });
         }
     }

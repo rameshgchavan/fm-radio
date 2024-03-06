@@ -49,6 +49,7 @@ const Broadcast = () => {
             setReceivingCall(true);
             setCaller(data.from);
             setCallerSignal(data.signal);
+            console.warn("callUser");
         });
     }, [socket]);
 
@@ -79,6 +80,7 @@ const Broadcast = () => {
     }, [receivingCall])
 
     const answerCall = () => {
+        console.warn("answerCall fuction");
         // Creating new peer
         const peer = new Peer({
             initiator: false,
@@ -89,6 +91,7 @@ const Broadcast = () => {
         // Emiting socket "answerCall" event on peer "signal" event
         peer.on("signal", (data) => {
             socket.emit("answerCall", { signal: data, to: caller });
+            console.warn("signal");
         });
 
         // peer signal function calling with argument listener's signals
