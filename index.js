@@ -16,20 +16,20 @@ const io = new Server(server, { cors: true });
 
 // Calling and emiting events on io "connection" event
 io.on("connection", (socket) => {
-	// console.log(`${socket.id} socket connected`);
-
-	// socket.emit("me", socket.id)
-
-	// Emiting "callUser" events on socket "callUser" event
-	socket.on("callUser", (data) => {
-		// Emiting "callUser" events on io "callUser" event to broadcaster socket id
-		io.to(data.userToCall).emit("callUser", { signal: data.signalData, from: data.from })
+	// Emiting "getBroadcastId" events on socket "requestBroadcast" event
+	socket.on("requestBroadcast", (data) => {
+		io.emit("getBroadcastId", data);
 	});
 
-	// Emiting "callAccepted" events on socket "answerCall" event
-	socket.on("answerCall", (data) => {
+	socket.on("braodcastId", data => {
+		// Emiting "connectBroadcaster" events on socket "braodcastId" event to broadcaster socket id
+		io.to(data.broadcastId).emit("connectBroadcaster", data)
+	})
+
+	// Emiting "broadcasterResponse" events on socket "respondListener" event
+	socket.on("respondListener", (data) => {
 		// Emiting "callAccepted" events on io "callAccepted" event to listener socket id
-		io.to(data.to).emit("callAccepted", data.signal)
+		io.to(data.listenerId).emit("broadcasterResponse", data.broadcasterSignal)
 	});
 })
 
