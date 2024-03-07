@@ -18,17 +18,19 @@ const io = new Server(server, { cors: true });
 io.on("connection", (socket) => {
 	// Emiting "getBroadcastId" events on socket "requestBroadcast" event
 	socket.on("requestBroadcast", (data) => {
+		// Getting broacaster id from frontend
 		io.emit("getBroadcastId", data);
 	});
 
+	// Emiting "connectBroadcaster" events on socket "braodcastId" event to broadcaster socket id
 	socket.on("braodcastId", data => {
-		// Emiting "connectBroadcaster" events on socket "braodcastId" event to broadcaster socket id
+		// Connecting to broacaster with data
 		io.to(data.broadcastId).emit("connectBroadcaster", data)
 	})
 
 	// Emiting "broadcasterResponse" events on socket "respondListener" event
 	socket.on("respondListener", (data) => {
-		// Emiting "callAccepted" events on io "callAccepted" event to listener socket id
+		// Responding to listener with broadcaster's signal
 		io.to(data.listenerId).emit("broadcasterResponse", data.broadcasterSignal)
 	});
 })
