@@ -10,9 +10,8 @@ import { updateUserRequest } from "../apiRequests/usersAPIs/updateUserAPIs";
 // Users: pages/broadcastPage.js
 const Broadcast = () => {
     // Initialized state hooks
-    const [receivingCall, setReceivingCall] = useState(false);
-    const [caller, setCaller] = useState("");
-    const [callerSignal, setCallerSignal] = useState();
+    const [receivedConnection, setReceivedConnection] = useState(false);
+    const [listener, setListener] = useState();
     const [broadcastStream, setBroadcastStream] = useState(false);
     const [logEvent, setLogEvent] = useState(["App lounched"]);
 
@@ -33,7 +32,7 @@ const Broadcast = () => {
             : setLogEvent((log) => [...log, "Failled..."]);
     }
 
-    // This useEffect handles generate media stream and ser socket id in db
+    // This generates media stream, sends socket id to backend and sets socket id in db
     useEffect(() => {
         // Getting voice stream of device
         navigator.mediaDevices.getUserMedia({ video: false, audio: true })
@@ -44,12 +43,20 @@ const Broadcast = () => {
         // Fucntion calling to set socket id in db
         handleSetId(socket.id);
 
-        // Updating states on socket "callUser" event
-        socket.on("callUser", (data) => {
-            setReceivingCall(true);
-            setCaller(data.from);
-            setCallerSignal(data.signal);
-            console.warn("callUser");
+        // Emiting socket "braodcastId" event on socket "getBroadcastId" event
+        // Sendding braodcast id to backend
+        socket.on("getBroadcastId", data => {
+            console.warn("getBroadcastId", socket.id);
+
+            socket.emit("braodcastId", { broadcastId: socket.id, ...data });
+        });
+
+        // Updating states on socket "connectBroadcaster" event
+        socket.on("connectBroadcaster", (data) => {
+            setReceivedConnection(true);
+            setListener({ id: data.listenerId, signal: data.listenerSignal })
+
+            console.warn("connectBroadcaster");
         });
     }, [socket]);
 
@@ -62,7 +69,7 @@ const Broadcast = () => {
         event.returnValue = '';
     }
 
-    // Thid useEffect sets isLogged to flase on browser close event
+    // This sets isLogged to flase on browser close event
     useEffect(() => {
         window.addEventListener('beforeunload', alertUser)
         window.addEventListener('unload', handleTabClosing)
@@ -72,15 +79,17 @@ const Broadcast = () => {
         };
     }, []);
 
+    // This calls acceptConnection on receivedConnection true
     useEffect(() => {
         // Fuction calling if receivingCall is true
-        receivingCall && answerCall();
+        receivedConnection && acceptConnection();
         // Updating state hook
-        setReceivingCall(false);
-    }, [receivingCall])
+        setReceivedConnection(false);
+    }, [receivedConnection])
 
-    const answerCall = () => {
-        console.warn("answerCall fuction");
+    // This functions creates new peer and send listener id and signal to backend
+    const acceptConnection = () => {
+        console.warn("acceptConnection fuction");
         // Creating new peer
         const peer = new Peer({
             initiator: false,
@@ -89,13 +98,14 @@ const Broadcast = () => {
         });
 
         // Emiting socket "answerCall" event on peer "signal" event
+        // Sendding listener id and broadcaster signal to backend
         peer.on("signal", (data) => {
-            socket.emit("answerCall", { signal: data, to: caller });
+            socket.emit("respondListener", { listenerId: listener.id, broadcasterSignal: data });
             console.warn("signal");
         });
 
         // peer signal function calling with argument listener's signals
-        peer.signal(callerSignal);
+        peer.signal(listener.signal);
     }
 
     return (

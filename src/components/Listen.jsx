@@ -39,13 +39,14 @@ const Listen = () => {
                 stream: stream
             });
 
-            // Emiting socket "callUser" event on peer "signal" event
+            // Emiting socket "requestBroadcast" event on peer "signal" event
             peer.on("signal", (data) => {
-                socket.emit("callUser", {
-                    userToCall: broadcastId,
-                    signalData: data,
-                    from: socket.id
-                })
+                socket.emit("requestBroadcast", {
+                    // userToCall: broadcastId,
+                    listenerId: socket.id,
+                    listenerSignal: data
+                });
+
                 console.warn("signal");
             });
 
@@ -55,14 +56,14 @@ const Listen = () => {
                 console.warn("stream");
             });
 
-            // updating states and calling peer signal function on socket "callAccepted" event
-            socket.on("callAccepted", (signal) => {
+            // updating states and calling peer signal function on socket "broadcasterResponse" event
+            socket.on("broadcasterResponse", (broadcasterSignal) => {
                 setIsConnected(true);
                 setConnecting(false);
                 // peer signal function calling with argument broadcaster's signals
-                peer.signal(signal);
+                peer.signal(broadcasterSignal);
 
-                console.warn("callAccepted");
+                console.warn("broadcasterResponse");
             });
         }
     }
