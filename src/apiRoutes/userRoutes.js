@@ -20,7 +20,7 @@ const userRoutes = express.Router();
 
 // (APIs) downwards
 // Get route to send broadcast id and user logged status
-userRoutes.route("/broadcast").get(async (req, res) => {
+userRoutes.route("/broadcastid").get(async (req, res) => {
     const email = req.headers.email;
 
     await UsersModel.findOne({ email })
