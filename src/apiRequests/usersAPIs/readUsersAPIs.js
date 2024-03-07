@@ -14,7 +14,6 @@ const readUserRequest = async (crediantials) => {
 
 // Get socket id
 const readBroadcastRequest = async (email) => {
-    console.warn(email);
     return (
         (await axios(`/users/broadcastid`,
             {
