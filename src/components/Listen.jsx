@@ -5,7 +5,7 @@ import { IoIosPlayCircle } from "react-icons/io";
 import Peer from "simple-peer";
 import io from "socket.io-client";
 
-// api request fuction
+// api request function
 import { readBroadcastRequest } from "../apiRequests/usersAPIs/readUsersAPIs";
 
 // This component listen the voice stream using websocket
@@ -17,7 +17,7 @@ const Listen = () => {
     const [status, setStatus] = useState(true);
     const userAudio = useRef();
 
-    // This fuction plays received voice 
+    // This function plays received voice 
     // Callers: /play button 
     const handlePlay = async () => {
         // Getting voice stream of device
@@ -39,7 +39,7 @@ const Listen = () => {
                 stream: stream
             });
 
-            // Emiting socket "requestBroadcast" event on peer "signal" event
+            // Emitting socket "requestBroadcast" event on peer "signal" event
             peer.on("signal", (data) => {
                 socket.emit("requestBroadcast", {
                     // userToCall: broadcastId,

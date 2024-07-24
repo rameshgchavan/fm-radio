@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Peer from "simple-peer";
 
-// api request fuction
+// api request function
 import { updateUserRequest } from "../apiRequests/usersAPIs/updateUserAPIs";
 
 // This component broadcast the voice stream using websocket
@@ -13,14 +13,14 @@ const Broadcast = () => {
     const [receivedConnection, setReceivedConnection] = useState(false);
     const [listener, setListener] = useState();
     const [broadcastStream, setBroadcastStream] = useState(false);
-    const [logEvent, setLogEvent] = useState(["App lounched"]);
+    const [logEvent, setLogEvent] = useState(["App launched"]);
 
     // Getting login user details store
     const { scrutinizedUser } = useSelector(state => state.usersReducer);
     // Getting socket from store
     const { socket } = useSelector(state => state.socketReducer);
 
-    // This fuction set socket id into db
+    // This function set socket id into db
     // Callers: /useEffect 
     const handleSetId = async (broadcastId) => {
         // api request to set socket id into db
@@ -29,7 +29,7 @@ const Broadcast = () => {
         // Updating log state hook
         res.code === 202 ?
             setLogEvent((log) => [...log, "Broadcasting..."])
-            : setLogEvent((log) => [...log, "Failled..."]);
+            : setLogEvent((log) => [...log, "Failed..."]);
     }
 
     // This generates media stream, sends socket id to backend and sets socket id in db
@@ -38,17 +38,17 @@ const Broadcast = () => {
         navigator.mediaDevices.getUserMedia({ video: false, audio: true })
             .then(stream => setBroadcastStream(stream));
 
-        // Updating log evenets
+        // Updating log events
         setLogEvent([...logEvent, `${socket.id} id generated`]);
-        // Fucntion calling to set socket id in db
+        // Function calling to set socket id in db
         handleSetId(socket.id);
 
-        // Emiting socket "braodcastId" event on socket "getBroadcastId" event
-        // Sendding braodcast id to backend
+        // Emitting socket "broadcastId" event on socket "getBroadcastId" event
+        // Sending broadcast id to backend
         socket.on("getBroadcastId", data => {
             console.warn("getBroadcastId", socket.id);
 
-            socket.emit("braodcastId", { broadcastId: socket.id, ...data });
+            socket.emit("broadcastId", { broadcastId: socket.id, ...data });
         });
 
         // Updating states on socket "connectBroadcaster" event
@@ -81,7 +81,7 @@ const Broadcast = () => {
 
     // This calls acceptConnection on receivedConnection true
     useEffect(() => {
-        // Fuction calling if receivingCall is true
+        // function calling if receivingCall is true
         receivedConnection && acceptConnection();
         // Updating state hook
         setReceivedConnection(false);
@@ -89,7 +89,7 @@ const Broadcast = () => {
 
     // This functions creates new peer and send listener id and signal to backend
     const acceptConnection = () => {
-        console.warn("acceptConnection fuction");
+        console.warn("acceptConnection function");
         // Creating new peer
         const peer = new Peer({
             initiator: false,
