@@ -42,11 +42,11 @@ userRoutes.route("/update").put(tokenVerification, async (req, res) => {
         }));
 })
 
-// Post route to check email exsists or not
+// Post route to check email exists or not
 userRoutes.route("/isemail").post(async (req, res) => {
     // Scrutinize Email
     const scrutiny = await userScrutiny(req.body);
-    // If not email exsist
+    // If not email exist
     if (scrutiny.code == 404) {
         res.send(scrutiny)
     }
@@ -64,7 +64,7 @@ userRoutes.route("/signup").post(async (req, res) => {
     const scrutiny = await userScrutiny(req.body);
 
     if (scrutiny.code == 404) {
-        // Save data (record) received in body to database and retun 201 response with message.
+        // Save data (record) received in body to database and return 201 response with message.
         await UsersModel(req.body).save()
             .then(res.send({
                 code: 201,
@@ -79,7 +79,7 @@ userRoutes.route("/login").post(async (req, res) => {
     const scrutiny = await userScrutiny(req.body);
 
     if (scrutiny.code == 200) {
-        // Find autheticated user 
+        // Find authenticated user 
         const user = await UsersModel.findOne(req.body).select('-password');
         // Create token to secure routes and send it into response
         jwt.sign({}, JWTKEY, (err, token) => {
@@ -98,7 +98,7 @@ userRoutes.route("/resetpass").put(async (req, res) => {
     const scrutiny = await userScrutiny(req.body);
     //Change password if old password matched or not matched
     if (scrutiny.code == 200 || scrutiny.code == 403) {
-        // Find email and update the password regarding that email and retun 202 response with message.
+        // Find email and update the password regarding that email and return 202 response with message.
         await UsersModel.findOneAndUpdate({ email: req.body.email }, { password: req.body.password })
             .then(res.send({
                 code: 202,
