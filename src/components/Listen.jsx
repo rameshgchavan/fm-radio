@@ -21,7 +21,19 @@ const Listen = () => {
     // Callers: /play button 
     const handlePlay = async () => {
         // Getting voice stream of device
-        const stream = await navigator.mediaDevices.getUserMedia({ video: false, audio: true });
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: false,
+            audio: {
+                autoGainControl: false,
+                channelCount: 2,
+                echoCancellation: false,
+                latency: 0,
+                noiseSuppression: false,
+                sampleRate: 48000,
+                sampleSize: 16,
+                volume: 1.0
+            }
+        });
 
         // api request to get socket id from db
         const { broadcastId, isLogged } = await readBroadcastRequest("vijaysinghthakurhnl@gmail.com");

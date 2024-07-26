@@ -35,7 +35,19 @@ const Broadcast = () => {
     // This generates media stream, sends socket id to backend and sets socket id in db
     useEffect(() => {
         // Getting voice stream of device
-        navigator.mediaDevices.getUserMedia({ video: false, audio: true })
+        navigator.mediaDevices.getUserMedia({
+            video: false,
+            audio: {
+                autoGainControl: false,
+                channelCount: 2,
+                echoCancellation: false,
+                latency: 0,
+                noiseSuppression: false,
+                sampleRate: 48000,
+                sampleSize: 16,
+                volume: 1.0
+            }
+        })
             .then(stream => setBroadcastStream(stream));
 
         // Updating log events
