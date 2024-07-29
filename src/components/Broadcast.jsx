@@ -109,8 +109,8 @@ const Broadcast = () => {
             stream: broadcastStream
         });
 
-        // Emiting socket "answerCall" event on peer "signal" event
-        // Sendding listener id and broadcaster signal to backend
+        // Emitting socket "answerCall" event on peer "signal" event
+        // Sending listener id and broadcaster signal to backend
         peer.on("signal", (data) => {
             socket.emit("respondListener", { listenerId: listener.id, broadcasterSignal: data });
             console.warn("signal");
