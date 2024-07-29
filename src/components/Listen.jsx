@@ -40,6 +40,14 @@ const Listen = () => {
 
         setStatus(isLogged);
 
+        // Setting time out if broadcaster is offline
+        // Waiting for 10 sec to connect broadcaster
+        const timeoutId = setTimeout(() => {
+            setIsConnected(false);
+            setConnecting(false);
+            setStatus(false);
+        }, 10000)
+
         if (isLogged) {
             // Creating websocket connection
             const socket = io.connect("/"); //Taking proxy path from package.json 
@@ -70,6 +78,9 @@ const Listen = () => {
 
             // updating states and calling peer signal function on socket "broadcasterResponse" event
             socket.on("broadcasterResponse", (broadcasterSignal) => {
+                // Stopping timeOut function
+                clearTimeout(timeoutId);
+                
                 setIsConnected(true);
                 setConnecting(false);
                 // peer signal function calling with argument broadcaster's signals
