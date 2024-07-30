@@ -59,10 +59,10 @@ const Listen = () => {
                 stream: stream
             });
 
-            // Emitting socket "requestBroadcast" event on peer "signal" event
+            // Emitting socket "requestBroadcaster" event on peer "signal" event
             peer.on("signal", (data) => {
-                socket.emit("requestBroadcast", {
-                    // userToCall: broadcastId,
+                socket.emit("requestBroadcaster", {
+                    broadcastId,
                     listenerId: socket.id,
                     listenerSignal: data
                 });
@@ -80,7 +80,7 @@ const Listen = () => {
             socket.on("broadcasterResponse", (broadcasterSignal) => {
                 // Stopping timeOut function
                 clearTimeout(timeoutId);
-                
+
                 setIsConnected(true);
                 setConnecting(false);
                 // peer signal function calling with argument broadcaster's signals
