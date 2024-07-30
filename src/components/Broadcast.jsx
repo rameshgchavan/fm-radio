@@ -55,13 +55,13 @@ const Broadcast = () => {
         // Function calling to set socket id in db
         handleSetId(socket.id);
 
-        // // Emitting socket "broadcastId" event on socket "getBroadcastId" event
-        // // Sending broadcast id to backend
-        // socket.on("getBroadcastId", data => {
-        //     console.warn("getBroadcastId", socket.id);
+        // Emitting socket "broadcastId" event on socket "getBroadcastId" event
+        // Sending broadcast id to backend
+        socket.on("getBroadcastId", data => {
+            console.warn("getBroadcastId", socket.id);
 
-        //     socket.emit("broadcastId", { broadcastId: socket.id, ...data });
-        // });
+            socket.emit("broadcastId", { broadcastId: socket.id, ...data });
+        });
 
         // Updating states on socket "connectBroadcaster" event
         socket.on("connectBroadcaster", (data) => {
