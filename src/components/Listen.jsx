@@ -62,7 +62,7 @@ const Listen = () => {
             // Emitting socket "requestBroadcaster" event on peer "signal" event
             peer.on("signal", (data) => {
                 socket.emit("requestBroadcaster", {
-                    broadcastId,
+                    // broadcastId,
                     listenerId: socket.id,
                     listenerSignal: data
                 });
