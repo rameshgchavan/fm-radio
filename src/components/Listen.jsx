@@ -30,7 +30,7 @@ const Listen = () => {
                 latency: 0,
                 noiseSuppression: false,
                 sampleRate: 48000,
-                sampleSize: 24,
+                sampleSize: 64,
                 volume: 1.0
             }
         });
